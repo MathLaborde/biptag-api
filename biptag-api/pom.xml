@@ -35,7 +35,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-
 		<!-- OAuth2 Resource Server: para o Spring ler Tokens JWT -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
