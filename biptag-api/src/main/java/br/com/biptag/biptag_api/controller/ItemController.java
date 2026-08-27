@@ -23,6 +23,12 @@ public class ItemController {
         return ResponseEntity.ok(service.findAllItems());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Item> getItemById(@PathVariable Long id) {
+        Item item = service.findItemById(id);
+        return ResponseEntity.ok(item);
+    }
+
     @PostMapping
     public ResponseEntity<Item> createItem(@RequestBody Item item) {
         Item newItem = service.createItem(item);

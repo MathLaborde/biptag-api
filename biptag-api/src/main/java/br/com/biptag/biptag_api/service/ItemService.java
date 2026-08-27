@@ -20,6 +20,12 @@ public class ItemService {
         return repository.findAll();
     }
 
+    // Equivale a police de SELECT por ID do Supabase
+    public Item findItemById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item não encontrado com o ID: " + id));
+    }
+
     // Equivale a police de INSERT do Supabase
     public Item createItem(Item item) {
         return repository.save(item);
