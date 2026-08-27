@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/items")
@@ -21,6 +22,12 @@ public class ItemController {
     @GetMapping
     public ResponseEntity<List<Item>> getAllItems() {
         return ResponseEntity.ok(service.findAllItems());
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Item>> getItemsByUser(@PathVariable UUID userId) {
+        List<Item> items = service.findItemsByUserId(userId);
+        return ResponseEntity.ok(items);
     }
 
     @GetMapping("/{id}")

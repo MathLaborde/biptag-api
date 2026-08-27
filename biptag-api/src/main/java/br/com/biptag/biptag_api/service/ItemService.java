@@ -5,6 +5,7 @@ import br.com.biptag.biptag_api.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ItemService {
@@ -18,6 +19,11 @@ public class ItemService {
     // Equivale a police de SELECT do Supabase
     public List<Item> findAllItems() {
         return repository.findAll();
+    }
+
+    // Equivale a police de SELECT por usuario logado
+    public List<Item> findItemsByUserId(UUID userId) {
+        return repository.findByUserId(userId);
     }
 
     // Equivale a police de SELECT por ID do Supabase

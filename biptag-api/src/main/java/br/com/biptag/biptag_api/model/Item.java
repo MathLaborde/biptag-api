@@ -37,6 +37,10 @@ public class Item {
     @Column(name = "category", nullable = false)
     private Long category;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category", referencedColumnName = "id", insertable = false, updatable = false)
+    private Category categoryData;
+
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
@@ -53,6 +57,16 @@ public class Item {
     protected void onCreate() {
         if (this.createdAt == null) {
             this.createdAt = OffsetDateTime.now();
+        }
+        if (this.status == null || this.status.trim().isEmpty() || this.status.equalsIgnoreCase("null")) {
+            this.status = "CREATED";
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        if (this.status == null || this.status.trim().isEmpty() || this.status.equalsIgnoreCase("null")) {
+            this.status = "CREATED";
         }
     }
 
@@ -163,4 +177,8 @@ public class Item {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Category getCategoryData() {return categoryData;}
+
+    public void setCategoryData(Category categoryData) {this.categoryData = categoryData;}
 }
