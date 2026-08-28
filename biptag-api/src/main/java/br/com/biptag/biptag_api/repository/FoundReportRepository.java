@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FoundReportRepository extends JpaRepository<FoundReport, Long> {
+    java.util.Optional<FoundReport> findByAlertId(Long alertId);
 }

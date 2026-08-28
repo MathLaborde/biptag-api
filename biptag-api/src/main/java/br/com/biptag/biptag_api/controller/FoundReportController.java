@@ -21,6 +21,20 @@ public class FoundReportController {
         return ResponseEntity.ok(reports);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<FoundReport> getReportById(@PathVariable Long id) {
+        return foundReportService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/alert/{alertId}")
+    public ResponseEntity<FoundReport> getReportByAlertId(@PathVariable Long alertId) {
+        return foundReportService.findByAlertId(alertId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<FoundReport> createReport(@RequestBody FoundReport report) {
         FoundReport savedReport = foundReportService.createReport(report);

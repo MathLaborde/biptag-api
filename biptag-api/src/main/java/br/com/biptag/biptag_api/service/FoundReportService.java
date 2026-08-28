@@ -18,6 +18,16 @@ public class FoundReportService {
         return foundReportRepository.findAll();
     }
 
+    // Equivale a police de SELECT do Supabase puxando por ID
+    public java.util.Optional<FoundReport> findById(Long id) {
+        return foundReportRepository.findById(id);
+    }
+
+    // Equivale a police de SELECT do Supabase puxando pelo Alerta
+    public java.util.Optional<FoundReport> findByAlertId(Long alertId) {
+        return foundReportRepository.findByAlertId(alertId);
+    }
+
     // Equivale a police de INSERT do Supabase
     public FoundReport createReport(FoundReport report) {
         return foundReportRepository.save(report);

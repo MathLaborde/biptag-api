@@ -51,6 +51,12 @@ public class Alert {
         if (this.createdAt == null) {
             this.createdAt = OffsetDateTime.now();
         }
+        if (this.status == null || this.status.trim().isEmpty()) {
+            this.status = "active";
+        }
+        if (this.radiusKm == null) {
+            this.radiusKm = 5;
+        }
     }
 
     public Alert() {
