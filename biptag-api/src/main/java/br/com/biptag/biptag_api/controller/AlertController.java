@@ -23,6 +23,15 @@ public class AlertController {
         return ResponseEntity.ok(service.findAllAlerts());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Alert> getAlertById(@PathVariable Long id) {
+        return service.findAllAlerts().stream()
+                .filter(a -> a.getId().equals(id))
+                .findFirst()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<Alert> createAlert(@RequestBody Alert alerta) {
         Alert novoAlerta = service.createAlert(alerta);

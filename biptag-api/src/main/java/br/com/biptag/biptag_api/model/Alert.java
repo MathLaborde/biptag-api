@@ -11,6 +11,10 @@ public class Alert {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "item_id", insertable = false, updatable = false)
+    private Item itemData;
+
     @Column(name = "item_id")
     private Long itemId;
 
@@ -139,5 +143,13 @@ public class Alert {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Item getItemData() {
+        return itemData;
+    }
+
+    public void setItemData(Item itemData) {
+        this.itemData = itemData;
     }
 }
