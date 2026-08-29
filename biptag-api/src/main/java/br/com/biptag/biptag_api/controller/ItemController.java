@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -52,5 +53,14 @@ public class ItemController {
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         service.deleteItem(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Void> updateStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> statusMap) {
+        String status = statusMap.get("status");
+        service.updateStatus(id, status);
+        return ResponseEntity.ok().build();
     }
 }

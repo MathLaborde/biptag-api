@@ -24,4 +24,8 @@ public class ReviewService {
     public Review createReview(Review review) {
         return repository.save(review);
     }
+
+    public List<Review> getReviewsByReturnProcess(Long returnProcessId) {
+        return repository.findByReturnProcessId(returnProcessId);
+    }
 }

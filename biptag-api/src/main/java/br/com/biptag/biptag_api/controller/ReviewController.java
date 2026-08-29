@@ -23,6 +23,11 @@ public class ReviewController {
         return ResponseEntity.ok(service.getAllReviews());
     }
 
+    @GetMapping("/return-process/{returnProcessId}")
+    public ResponseEntity<List<Review>> getReviewsByReturnProcess(@PathVariable Long returnProcessId) {
+        return ResponseEntity.ok(service.getReviewsByReturnProcess(returnProcessId));
+    }
+
     @PostMapping
     public ResponseEntity<Review> createReview(@RequestBody Review review) {
         Review newReview = service.createReview(review);

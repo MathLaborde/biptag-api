@@ -60,4 +60,11 @@ public class ItemService {
     public void deleteItem(Long id) {
         repository.deleteById(id);
     }
+
+    public void updateStatus(Long id, String status) {
+        Item item = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item não encontrado com ID: " + id));
+        item.setStatus(status);
+        repository.save(item);
+    }
 }
