@@ -20,6 +20,11 @@ public class ReturnProcessService {
         return repository.findAll();
     }
 
+    // Equivale a buscar apenas 1 processo específico pelo ID
+    public ReturnProcess getReturnProcessById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Return process not found with id: " + id));
+    }
     // Equivale a police de INSERT do Supabase
     public ReturnProcess createReturnProcess(ReturnProcess returnProcess) {
         return repository.save(returnProcess);

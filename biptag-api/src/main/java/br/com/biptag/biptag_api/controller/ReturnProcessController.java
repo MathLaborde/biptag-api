@@ -18,9 +18,10 @@ public class ReturnProcessController {
         this.service = service;
     }
 
-    @GetMapping
-    public ResponseEntity<List<ReturnProcess>> getAllReturnProcesses() {
-        return ResponseEntity.ok(service.getAllReturnProcesses());
+    @GetMapping("/{id}")
+    public ResponseEntity<ReturnProcess> getReturnProcessById(@PathVariable Long id) {
+        ReturnProcess process = service.getReturnProcessById(id);
+        return ResponseEntity.ok(process);
     }
 
     @PostMapping
