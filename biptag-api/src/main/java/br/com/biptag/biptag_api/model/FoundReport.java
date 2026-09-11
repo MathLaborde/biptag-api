@@ -1,5 +1,8 @@
 package br.com.biptag.biptag_api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -15,7 +18,14 @@ public class FoundReport {
     @Column(name = "item_id")
     private Long itemId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "finder_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonProperty("finder")
+    private User finder;
+
+    // Retorna a String ID sob a chave "userId"
     @Column(name = "finder_id")
+    @JsonProperty("finderId")
     private UUID finderId;
 
     @Column(name = "found_lat")

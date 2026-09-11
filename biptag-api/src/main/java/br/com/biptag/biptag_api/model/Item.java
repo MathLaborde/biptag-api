@@ -1,5 +1,6 @@
 package br.com.biptag.biptag_api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -13,7 +14,13 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonProperty("userData")
+    private User user;
+
     @Column(name = "user_id")
+    @JsonProperty("userId")
     private UUID userId;
 
     @Column(name = "tag_id", unique = true)

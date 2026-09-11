@@ -1,18 +1,25 @@
 package br.com.biptag.biptag_api.service;
 
 import br.com.biptag.biptag_api.model.Alert;
+import br.com.biptag.biptag_api.model.FoundReport;
 import br.com.biptag.biptag_api.repository.AlertRepository;
+import br.com.biptag.biptag_api.repository.FoundReportRepository;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.ObjectMapper;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class AlertService {
 
     private final AlertRepository repository;
+    private final FoundReportRepository reportRepository;
+    private final ObjectMapper objectMapper;
 
-    public AlertService(AlertRepository repository) {
+    public AlertService(AlertRepository repository, FoundReportRepository reportRepository, ObjectMapper objectMapper) {
         this.repository = repository;
+        this.reportRepository = reportRepository;
+        this.objectMapper = objectMapper;
     }
 
     // Equivale a police de SELECT do Supabase
@@ -23,5 +30,20 @@ public class AlertService {
     // Equivale a police de INSERT do Supabase
     public Alert createAlert(Alert alerta) {
         return repository.save(alerta);
+    }
+
+    public List<Map<String, Object>> findAllAlertsWithReports() {
+        List<Alert> alerts = repository.findAllByStatus("active");
+
+        return alerts.stream().map(alert -> {
+            Optional<FoundReport> reportOpt = reportRepository.findByAlertId(alert.getId());
+
+            @SuppressWarnings("unchecked")
+            Map<String, Object> alertMap = objectMapper.convertValue(alert, LinkedHashMap.class);
+
+            alertMap.put("report", reportOpt.orElse(null));
+
+            return alertMap;
+        }).toList();
     }
 }

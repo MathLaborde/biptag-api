@@ -24,6 +24,12 @@ public class ReturnProcessController {
         return ResponseEntity.ok(process);
     }
 
+    @GetMapping("/by-alert/{alertId}")
+    public ResponseEntity<ReturnProcess> getReturnProcessByAlertId(@PathVariable Long alertId) {
+        ReturnProcess process = service.getReturnProcessByAlertId(alertId);
+        return ResponseEntity.ok(process);
+    }
+
     @PostMapping
     public ResponseEntity<ReturnProcess> createReturnProcess(@RequestBody ReturnProcess returnProcess) {
         ReturnProcess newProcess = service.createReturnProcess(returnProcess);

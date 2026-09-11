@@ -25,6 +25,11 @@ public class ReturnProcessService {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Return process not found with id: " + id));
     }
+
+    public ReturnProcess getReturnProcessByAlertId(Long id) {
+        return repository.findByAlertId(id);
+    }
+
     // Equivale a police de INSERT do Supabase
     public ReturnProcess createReturnProcess(ReturnProcess returnProcess) {
         return repository.save(returnProcess);

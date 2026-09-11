@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReturnProcessRepository extends JpaRepository<ReturnProcess, Long> {
+    ReturnProcess findByAlertId(Long id);
 }

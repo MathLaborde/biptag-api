@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/alerts")
@@ -30,6 +31,11 @@ public class AlertController {
                 .findFirst()
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/with-reports")
+    public ResponseEntity<List<Map<String, Object>>> getAllAlertsWithReports() {
+        return ResponseEntity.ok(service.findAllAlertsWithReports());
     }
 
     @PostMapping
