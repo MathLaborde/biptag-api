@@ -22,17 +22,16 @@ public class AlertService {
         this.objectMapper = objectMapper;
     }
 
-    // Equivale a police de SELECT do Supabase
     public List<Alert> findAllAlerts() {
         return repository.findAll();
     }
 
-    // Equivale a police de INSERT do Supabase
     public Alert createAlert(Alert alerta) {
         return repository.save(alerta);
     }
 
     public List<Map<String, Object>> findAllAlertsWithReports() {
+        // Busca apenas alertas com status "active"
         List<Alert> alerts = repository.findAllByStatus("active");
 
         return alerts.stream().map(alert -> {
@@ -45,5 +44,25 @@ public class AlertService {
 
             return alertMap;
         }).toList();
+    }
+
+    // === NOVO MÉTODO PARA FINALIZAR A DEVOLUÇÃO E LIMPAR INVENTÁRIO ===
+    public void resolveAlert(Long id) {
+        // 1. Busca o alerta pelo ID
+        Alert alert = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Alerta não encontrado"));
+
+        // 2. Muda o status do alerta para que ele não caia mais no findAllByStatus("active")
+        alert.setStatus("resolved");
+
+        // 3. Acessa o Item vinculado e tira a flag de perdido para limpar do inventário
+        // Atenção: Ajuste "getItem()" e "setStatus()" se os nomes forem diferentes na sua classe Item.java
+        if (alert.getItemData() != null) {
+            alert.getItemData().setStatus("active");
+            // Se você usar um boolean na classe Item, seria algo como: alert.getItem().setLost(false);
+        }
+
+        // 4. Salva a atualização no banco de dados
+        repository.save(alert);
     }
 }

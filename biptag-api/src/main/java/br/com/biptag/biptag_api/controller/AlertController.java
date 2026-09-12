@@ -43,4 +43,11 @@ public class AlertController {
         Alert novoAlerta = service.createAlert(alerta);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoAlerta);
     }
+
+    @PutMapping("/{id}/resolve")
+    public ResponseEntity<Void> resolveAlert(@PathVariable Long id) {
+        // Chama o serviço para resolver o alerta
+        service.resolveAlert(id);
+        return ResponseEntity.noContent().build();
+    }
 }
