@@ -14,7 +14,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonProperty("userData")
     private User user;
@@ -186,6 +186,14 @@ public class Item {
     }
 
     public Category getCategoryData() {return categoryData;}
+
+    public User getUserData() {
+        return user;
+    }
+
+    public void setUserData(User user) {
+        this.user = user;
+    }
 
     public void setCategoryData(Category categoryData) {this.categoryData = categoryData;}
 }
