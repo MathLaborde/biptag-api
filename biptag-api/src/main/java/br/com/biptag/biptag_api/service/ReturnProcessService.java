@@ -50,4 +50,14 @@ public class ReturnProcessService {
 
         return repository.save(existingProcess);
     }
+
+    // Rota blindada para concluir a entrega com a palavra mágica que o motoboy espera
+    public ReturnProcess completeReturnProcess(Long id) {
+        ReturnProcess existingProcess = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Return process not found with id: " + id));
+
+        existingProcess.setStatus("completed"); // Força o status correto
+
+        return repository.save(existingProcess);
+    }
 }

@@ -41,4 +41,10 @@ public class ReturnProcessController {
         ReturnProcess updatedProcess = service.updateReturnProcess(id, details);
         return ResponseEntity.ok(updatedProcess);
     }
+
+    @PatchMapping("/{id}/complete")
+    public ResponseEntity<ReturnProcess> completeReturnProcess(@PathVariable Long id) {
+        ReturnProcess completedProcess = service.completeReturnProcess(id);
+        return ResponseEntity.ok(completedProcess);
+    }
 }
