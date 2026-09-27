@@ -11,7 +11,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", columnDefinition = "text")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "created_at", nullable = false, updatable = false)

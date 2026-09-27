@@ -14,7 +14,8 @@ public class PartnerPoint {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "address", columnDefinition = "text", nullable = false)
+    @Lob
+    @Column(name = "address", nullable = false)
     private String address;
 
     @Column(name = "latitude")

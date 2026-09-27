@@ -1,6 +1,8 @@
 package br.com.biptag.biptag_api.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -12,13 +14,15 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "user_id")
     private UUID userId;
 
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "message", columnDefinition = "text", nullable = false)
+    @Lob
+    @Column(name = "message", nullable = false)
     private String message;
 
     @Column(name = "is_read")

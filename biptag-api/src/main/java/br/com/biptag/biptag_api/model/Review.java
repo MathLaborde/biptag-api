@@ -1,6 +1,8 @@
 package br.com.biptag.biptag_api.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -15,13 +17,15 @@ public class Review {
     @Column(name = "return_process_id")
     private Long returnProcessId;
 
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "reviewer_id")
     private UUID reviewerId;
 
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    @Column(name = "comment", columnDefinition = "text")
+    @Lob
+    @Column(name = "comment_text")
     private String comment;
 
     @Column(name = "created_at", nullable = false, updatable = false)

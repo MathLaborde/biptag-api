@@ -27,7 +27,8 @@ public class Alert {
     @Column(name = "last_seen_lng")
     private Double lastSeenLng;
 
-    @Column(name = "last_seen_address", columnDefinition = "text")
+    @Lob
+    @Column(name = "last_seen_address")
     private String lastSeenAddress;
 
     @Column(name = "incident_date", nullable = false)
@@ -42,7 +43,8 @@ public class Alert {
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
-    @Column(name = "description", columnDefinition = "text")
+    @Lob
+    @Column(name = "description")
     private String description;
 
     // Executado automaticamente antes de salvar no banco

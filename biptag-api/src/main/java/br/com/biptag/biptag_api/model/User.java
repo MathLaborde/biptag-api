@@ -3,37 +3,30 @@ package br.com.biptag.biptag_api.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Immutable;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.util.UUID;
 
 @Entity
 @Immutable
-@Table(name = "users", schema = "auth")
+@Table(name = "app_users")
 public class User {
 
     @Id
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID id;
 
     private String email;
 
-    @Column(name = "raw_user_meta_data")
-    private String userMetadata;
+    @Column(name = "full_name")
+    private String fullName;
 
     public User() {
     }
 
     @JsonProperty("name")
     public String getName() {
-        if (userMetadata == null || userMetadata.isBlank()) return null;
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode node = mapper.readTree(userMetadata);
-            return node.has("name") ? node.get("name").asText() : null;
-        } catch (Exception e) {
-            return null;
-        }
+        return fullName;
     }
 
     public UUID getId() {
@@ -52,11 +45,11 @@ public class User {
         this.email = email;
     }
 
-    public String getUserMetadata() {
-        return userMetadata;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setUserMetadata(String userMetadata) {
-        this.userMetadata = userMetadata;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

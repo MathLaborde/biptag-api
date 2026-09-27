@@ -2,6 +2,8 @@ package br.com.biptag.biptag_api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -19,6 +21,7 @@ public class Item {
     @JsonProperty("userData")
     private User user;
 
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "user_id")
     @JsonProperty("userId")
     private UUID userId;
@@ -48,7 +51,8 @@ public class Item {
     @JoinColumn(name = "category", referencedColumnName = "id", insertable = false, updatable = false)
     private Category categoryData;
 
-    @Column(name = "description", columnDefinition = "text")
+    @Lob
+    @Column(name = "description")
     private String description;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -57,7 +61,7 @@ public class Item {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "status", columnDefinition = "text")
+    @Column(name = "status")
     private String status;
 
     @PrePersist

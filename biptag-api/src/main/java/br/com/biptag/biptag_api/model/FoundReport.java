@@ -1,9 +1,10 @@
 package br.com.biptag.biptag_api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -24,8 +25,8 @@ public class FoundReport {
     private User finder;
 
     // Retorna a String ID sob a chave "userId"
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "finder_id")
-    @JsonProperty("finderId")
     private UUID finderId;
 
     @Column(name = "found_lat")
@@ -34,13 +35,15 @@ public class FoundReport {
     @Column(name = "found_lng")
     private Double foundLng;
 
-    @Column(name = "found_address", columnDefinition = "text")
+    @Lob
+    @Column(name = "found_address")
     private String foundAddress;
 
     @Column(name = "found_date", nullable = false)
     private OffsetDateTime foundDate;
 
-    @Column(name = "notes", columnDefinition = "text")
+    @Lob
+    @Column(name = "notes")
     private String notes;
 
     @Column(name = "is_anonymous")
