@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
@@ -13,7 +14,8 @@ import org.springframework.security.config.Customizer;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   UserSyncFilter userSyncFilter) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
@@ -21,7 +23,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
                         .anyRequest().authenticated() // Exige o Token JWT para todo o resto (POST, PUT, DELETE)
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+                .addFilterAfter(userSyncFilter, BearerTokenAuthenticationFilter.class);
 
         return http.build();
     }
